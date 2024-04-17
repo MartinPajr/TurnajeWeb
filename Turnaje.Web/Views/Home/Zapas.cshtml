@@ -1,0 +1,131 @@
+﻿@using Turnaje.Database.Entity
+@model Zapas
+
+
+@{
+    ViewBag.Title = "Match Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="zapas">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center cyberpunk round">Round @Model.RoundNumber </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 text-center cyberpunk score">
+
+                @Model.Uzivatel1.Nickname  -
+
+                @if (Model.Uzivatel2 != null)
+                {
+                    @Model.Uzivatel2.Nickname
+
+                }
+                else
+                {
+
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-center cyberpunk player">
+                <!-- Player 1 Information -->
+                @Model.Uzivatel1.Nickname<br />
+                GameId1
+            </div>
+            <div class="col-md-6 text-center cyberpunk player">
+                <!-- Player 2 Information -->
+                @if (Model.Uzivatel2 != null)
+                {
+                    @Model.Uzivatel2.Nickname
+                }
+                else
+                {
+
+                }
+                <br />
+                GameId2
+
+            </div>
+        </div>
+        <div class="row">
+            @if (Model.Winner != null && Model.Winner == @Model.Player1)
+            {
+                <div class="col-md-6 text-center cyberpunk player">
+                    @Model.Player1 Has Won
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6 text-center cyberpunk player">
+                    @{
+                        int userId = Model.Player1;
+                        var claimValue = User.Claims.FirstOrDefault(x => x.Type == "ID")?.Value;
+                        bool isMatch = int.TryParse(claimValue, out userId) && Model.Player1 == userId;
+                    }
+
+                    @if (isMatch)
+                    {
+                        <form asp-action="VysledekReport" method="post" class="cyberpunk-form">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="Winner" value="@Model.Player1" />
+                            <input type="hidden" asp-for="Reporter" value="@Model.Player1"/>
+                            <button type="submit" class="btn btn-cyberpunk">I won</button>
+                        </form>
+                        <form asp-action="VysledekReport" method="post" class="cyberpunk-form">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="Winner" value="@Model.Player2" />
+                            <input type="hidden" asp-for="Reporter" value="@Model.Player1"/>
+                            <button type="submit" class="btn btn-cyberpunk">I lost</button>
+                        </form>
+                    }
+                </div>
+            }
+            
+                @if (Model.Winner != null && Model.Winner == @Model.Player2)
+                {
+                    <div class="col-md-6 text-center cyberpunk player">
+                        @Model.Player2 Has Won
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 text-center cyberpunk player">
+                    <!-- Player 2 Report -->
+                    @if (Model.Uzivatel2 != null)
+                    {
+                        int userId2 = Model.Player2;
+                        var claimValue2 = User.Claims.FirstOrDefault(x => x.Type == "ID")?.Value;
+                        bool isMatch2 = int.TryParse(claimValue2, out userId2) && Model.Player2 == userId2;
+                        if (isMatch2)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form asp-action="VysledekReport" asp-controller="Home" method="post" class="cyberpunk-form">
+                                        <input type="hidden" asp-for="Id" />
+                                        <input type="hidden" asp-for="Winner" value="@Model.Player2" />
+                                        <input type="hidden" asp-for="Reporter" value="@Model.Player2"/>
+                                        <button type="submit" class="btn btn-cyberpunk w-100">I won</button>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <form asp-action="VysledekReport" asp-controller="Home" method="post" class="cyberpunk-form">
+                                        <input type="hidden" asp-for="Id" />
+                                        <input type="hidden" asp-for="Winner" value="@Model.Player1" />
+                                        <input type="hidden" asp-for="Reporter" value="@Model.Player2"/>
+                                        <button type="submit" class="btn btn-cyberpunk w-100">I lost</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    }
+                    </div>
+                }
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

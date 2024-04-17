@@ -1,0 +1,43 @@
+﻿@using Turnaje.Database.Entity
+@model Turnaj
+
+@{
+    ViewData["Title"] = "Tournament Settings";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center text-cyberpunk">Tournament Settings</h2>
+    <form asp-action="TournamentSettings" method="post" class="cyberpunk-form">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="Name" class="text-cyberpunk">Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="text-cyberpunk">Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Start" class="text-cyberpunk">Tournament Start</label>
+            <input asp-for="Start" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CheckStart" class="text-cyberpunk">Check-In Start</label>
+            <input asp-for="CheckStart" type="datetime-local" class="form-control" />
+        </div>
+         class="user-profile">
+                        <a asp-controller="Account" asp-action="UserProfile" asp-route-id=@User.Claims.FirstOrDefault(x => x.Type == "ID")?.Value style="text-decoration:none;"><h3>@User.Claims.FirstOrDefault(x => x.Type == "NAME")?.Value</h3></a>
+
+        <button type="submit" class="btn btn-cyberpunk">Save Settings</button>
+    </form>
+
+    <!-- Start Tournament Button -->
+    <form asp-action="StartTournament" method="post" class="mt-3">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-cyberpunk">Start the Tournament</button>
+    </form>
+</div>

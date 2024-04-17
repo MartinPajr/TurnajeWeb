@@ -1,0 +1,66 @@
+﻿@using Turnaje.Database.Entity
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Create Tournament";
+    @model Turnaj;
+
+}
+<div class="container mt-4">
+    <h2 class="text-center text-cyberpunk">Create Tournament</h2>
+    <form asp-action="NewTournament" method="post" class="cyberpunk-form">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="Name" class="text-cyberpunk">Tournament Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaxPlayers" class="text-cyberpunk">Maximum Players</label>
+            <input asp-for="MaxPlayers" type="number" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Style" class="text-cyberpunk">Tournament Style</label>
+            <select asp-for="Style" class="form-control">
+                <option value="1">Single Elimination</option>
+                <option value="4" disabled>Swiss</option>
+                <option value="5" disabled>Ladder</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Game" class="text-cyberpunk">Game</label>
+            <select asp-for="Game" class="form-control">
+                @foreach(Hra hra in Model.AllGames)
+                {
+                    <option value="@hra.Name">@hra.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="text-cyberpunk">Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="Pravidla" class="text-cyberpunk">Pravidla</label>
+            <textarea asp-for="Pravidla" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Start" class="text-cyberpunk">Start Time</label>
+            <input asp-for="Start" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CheckStart" class="text-cyberpunk">Check-In Start Time</label>
+            <input asp-for="CheckStart" type="datetime-local" class="form-control" />
+        </div>
+        <input asp-for="Majitel" type="hidden" value="@User.Claims.FirstOrDefault(x => x.Type == "ID")?.Value" />
+        <button type="submit" class="btn btn-cyberpunk">Create Tournament</button>
+    </form>
+</div>
+

@@ -1,0 +1,267 @@
+:root {
+    --color-main-background: #010512;
+    --color-secondary-background: #020932;
+    --color-main: #6CF2F2;
+    --color-headlines: #05DBF2;
+}
+
+@media (max-width: 768px) {
+    .text-cyberpunk-right {
+        text-align: left;
+    }
+}
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: Inter;
+    font-weight: 300;
+    font-weight: 300;
+    font-size: small;
+    line-height: 1.4em;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 15px; /* Indentation on the edges */
+}
+
+body {
+    background-image: linear-gradient(var(--color-secondary-background),#020932);
+    color: #ffffff; /* Light text */
+}
+
+.sidebar {
+    background-color: var(--color-main-background); /* Darker shade for sidebar */
+    color: #ffffff; /* Light text for sidebar */
+    min-height: 100vh; /* Full height */
+    padding: 20px;
+}
+
+
+.main-content {
+    background-color: #343a40; /* Same as body for consistency */
+    padding: 20px; /* Padding for content */
+}
+
+a, .navbar-brand, .nav-link {
+    color: #ffffff; /* Light text for links */
+}
+
+.sidebar .nav {
+    width: 100%;
+}
+
+.sidebar .nav-item {
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-link {
+    color: var(#7393B3); /* Neon blue as the default color */
+    font-weight: 100;
+    transition: color 0.3s ease-in-out;
+}
+
+    .sidebar .nav-link.active {
+        color: var(#9678B6); /* Neon purple for active link */
+    }
+
+.text-cyberpunk {
+    color: var(#D3BCC0);
+}
+
+.tournament-card {
+    background-color: #020921;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: medium;
+    border-color: var(--color-main-background);
+}
+
+    .tournament-card:hover {
+        box-shadow: 0 0 10px var(--color-main-background);
+        transition: color 0.5s ease-in;
+    }
+
+.tournament-name {
+    color: var(#7393B3);
+    font-size: 1.5em;
+}
+
+.game-name, .start-time, .description, .registered-players, .check-in {
+    color: var(#D3BCC0);
+}
+
+.bg-cyberpunk {
+    background-color: var(--color-main-background); /* Dark background for the navbar */
+}
+
+.navbar-dark .navbar-brand, .navbar-dark .nav-link {
+    color: var(#7393B3);
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: var(#9678B6);
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml, ..."); /* Adjust this for a cyberpunk style icon */
+}
+
+.btn-cyberpunk {
+    background-color: var(--color-headlines);
+    color: black;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-cyberpunk:hover {
+        background-color: palevioletred;
+    }
+
+.card-link {
+    color: inherit; /* Keeps the text color of card content */
+    text-decoration: none; /* Removes underline from links */
+}
+
+    .card-link:hover {
+        text-decoration: none;
+    }
+
+.cyberpunk-container {
+    color: var(#7393B3);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.text-cyberpunk {
+    color: var(#D3BCC0);
+}
+
+.cyberpunk-tabs .nav-link {
+    color: #7393B3;
+    border: 1px solid var #9678B6;
+}
+
+    .cyberpunk-tabs .nav-link.active {
+        background-color: #9678B6;
+        color: #fff;
+    }
+
+
+
+
+.user-profile {
+    color: black; /* Bright cyan, typical neon color */
+    font-family: Inter; /* Replace with actual cyberpunk-style font */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.profile-header {
+    background-color: var(--color-main-background); /* Slightly lighter dark shade for the header */
+    padding: 10px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    text-align: center;
+}
+
+    .profile-header h1 {
+        font-size: 24px;
+        color: var(--color-headlines); 
+    }
+
+.profile-details {
+    background-color: var(--color-main-background); /* Dark background for details section */
+    padding: 20px;
+    color: #fff; /* White color for text for readability */
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+    .profile-details p {
+        font-size: 18px;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .profile-details strong {
+        color: var(--color-headlines); /* Bright magenta for key details */
+    }
+
+
+.zapas {
+    padding: 20px;
+    border-radius: 10px;
+    padding-top: 60px;
+    max-width: 800px;
+    margin: auto;
+}
+
+    .zapas .round {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .zapas .player {
+        border: 1px solid #00FFFF;
+        padding: 20px;
+    }
+
+    .zapas .score {
+        font-size: 3em;
+        margin: 20px 0;
+    }
+
+    /* Cyberpunk styling */
+    .zapas .cyberpunk {
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow: 0 0 10px #00FFFF;
+    }
+
+#players {
+    padding: 15px;
+    border-radius: 5px;
+    color: #00FFFF; /* Neon green text */
+}
+
+    #players .list-item {
+        list-style: none; /* Removes default list styling */
+        padding: 10px; /* Padding inside each item */
+        margin-bottom: 10px; /* Space between items */
+        border: 1px solid #00FFFF; /* Neon green border */
+        border-radius: 5px; /* Rounded corners for the border */
+    }
+
+    #players .text-cyberpunk {
+        text-decoration: none; /* Removes underline from links */
+        font-weight: bold;
+        color: inherit; /* Inherits color from parent */
+        transition: color 0.3s ease-in-out;
+    }
+
+        #players .text-cyberpunk:hover {
+            color: #8f0; /* Lighter shade of green on hover */
+            text-shadow: 0 0 10px #00FFFF; /* Stronger glow on hover */
+        }

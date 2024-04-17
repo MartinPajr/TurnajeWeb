@@ -1,0 +1,18 @@
+﻿@using Turnaje.Database.Entity
+@model Hra
+
+@{
+    ViewData["Title"] = "New Game";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center text-cyberpunk">New Game</h2>
+    <form asp-action="NewGame" method="post" class="cyberpunk-form">
+        <div class="form-group">
+            <label asp-for="Name" class="text-cyberpunk">Name of the game</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-cyberpunk">Add new game</button>
+    </form>
+</div>

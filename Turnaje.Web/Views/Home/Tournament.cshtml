@@ -1,0 +1,145 @@
+﻿@using Turnaje.Database.Entity
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Turnaj // Replace with your actual model class
+
+
+
+@{
+    ViewBag.Title = "Tournament Details";
+}
+@section Styles {
+<link href="~/css/bracket.css" rel="stylesheet" type="text/css" />
+}
+<div class="container cyberpunk-container">
+    <!-- Tournament Details -->
+    <div class="tournament-details">
+        <h1 class="text-cyberpunk">@Model.Name</h1>
+        <p><strong><i class="bi bi-controller"></i> Game:</strong> @Model.Game</p>
+        <p><strong>Description:</strong> @Model.Description</p>
+        <p><strong>Start Time:</strong> @Model.Start.ToString("g")</p>
+        <p><strong>PocetKol:</strong> @Model.PocetKol</p>
+        <!-- Other details -->
+    </div>
+
+    <!-- Tabs/Bookmarks -->
+    <ul class="nav nav-tabs cyberpunk-tabs">
+        <li class="nav-item">
+            <a class="nav-link active text-cyberpunk" data-toggle="tab" href="#players"> <i class="bi bi-people-fill"></i> Players</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-cyberpunk" data-toggle="tab" href="#rules"><i class="bi bi-eye-fill"></i> Rules</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-cyberpunk" data-toggle="tab" href="#bracket"><i class="bi bi-braces"></i> Bracket</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-cyberpunk " data-toggle="tab" href="#registration"><i class="bi bi-plus-circle"></i> Registration</a>
+        </li>
+    </ul>
+
+
+    <div id="players" class="tab-content">
+        @foreach (Uzivatel uzivatel in @Model.Hraci)
+        {
+            <li class="list-item">
+                <a href="@Url.Action("UserProfile", "Account", new { id = uzivatel.Id })" class="text-cyberpunk">
+                    @uzivatel.Nickname
+                </a>
+            </li>
+        }
+    </div>
+    <div id="registration" class="tab-content" style="display:none;">
+        <a asp-action="TournamentRegistration" asp-route-id="@Model.Id">Register</a>
+    </div>
+    <div id="rules" class="tab-content" style="display:none;">
+        @Model.Pravidla
+    </div>
+    <div id="bracket" class="tab-content" style="display:none;">
+        @if (@Model.Seed != 0)
+        {
+            <div>
+                <section id="bracket">
+                    <div class="container">
+                        <main id="tournament">
+
+                            @for (int i = 1; i <= Model.PocetKol; i++)
+                            {
+                                <ul class="round round-@i">
+                                    <li class="spacer">&nbsp;</li>
+                                    @foreach (Zapas zapas in Model.Zapasy)
+                                    {
+                                        if (zapas.RoundNumber == i && zapas.Uzivatel1 != null && zapas.Uzivatel2 != null)
+                                        {
+                                            @if (zapas.Uzivatel1.Id == zapas.Winner)
+                                            {
+                                                <li class="game game-top winner"> @zapas.Uzivatel1.Nickname <span>1</span></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="game game-top ">@zapas.Uzivatel1.Nickname<span>0</span></li>
+                                            }
+
+                                            <li class="game game-spacer">&nbsp;</li>
+                                            @if (zapas.Uzivatel2.Id == zapas.Winner)
+                                            {
+                                                <li class="game game-bottom winner"> @zapas.Uzivatel2.Nickname <span>1</span></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="game game-bottom ">@zapas.Uzivatel2.Nickname<span>0</span></li>
+                                            }
+                                            <li class="spacer">&nbsp;</li>
+                                        }
+                                        else if (zapas.RoundNumber == i && zapas.Uzivatel1 == null && zapas.Uzivatel2 != null)
+                                        {
+                                            <li class="game game-top"><span>0</span></li>
+
+                                            <li class="game game-spacer">&nbsp;</li>
+                                            @if (zapas.Uzivatel2.Id == zapas.Winner)
+                                            {
+                                                <li class="game game-bottom winner"> @zapas.Uzivatel2.Nickname <span>1</span></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="game game-bottom ">@zapas.Uzivatel2.Nickname<span>0</span></li>
+                                            }
+                                            <li class="spacer">&nbsp;</li>
+                                        }
+                                        else if (zapas.RoundNumber == i && zapas.Uzivatel1 != null && zapas.Uzivatel2 == null)
+                                        {
+                                            @if (zapas.Uzivatel1.Id == zapas.Winner)
+                                            {
+                                                <li class="game game-top winner"> @zapas.Uzivatel1.Nickname<span>1</span></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="game game-top ">@zapas.Uzivatel1.Nickname<span>0</span></li>
+                                            }
+
+                                            <li class="game game-spacer">&nbsp;</li>
+                                            <li class="game game-bottom "><span>0</span></li>
+                                            <li class="spacer">&nbsp;</li>
+                                        }
+                                        else if (zapas.RoundNumber == i)
+                                        {
+                                            <li class="game game-top "><span>0</span></li>
+                                            <li class="game game-spacer">&nbsp;</li>
+                                            <li class="game game-bottom "><span>0</span></li>
+                                            <li class="spacer">&nbsp;</li>
+                                        }
+                                    }
+                                </ul>
+                            }
+                        </main>
+                    </div>
+                </section>
+            </div>
+        }
+    </div>
+
+
+</div>

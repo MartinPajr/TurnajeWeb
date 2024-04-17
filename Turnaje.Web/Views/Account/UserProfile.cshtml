@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "User Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="user-profile">
+    <div class="profile-header">
+        <h1>@Model.Nickname</h1>
+    </div>
+
+    <div class="profile-details">
+        <p><strong><i class="bi bi-emoji-smile-fill"></i></strong> @Model.Nickname</p>
+        <p><strong><i class="bi bi-envelope-at-fill"></i></strong> @Model.Email</p>
+        @if (Model.Crypto != null)
+        {
+            <p><strong>Crypto Address:</strong> @Model.Crypto</p>
+        }
+    </div>
+</div>

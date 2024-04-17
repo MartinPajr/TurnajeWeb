@@ -1,0 +1,89 @@
+﻿@using Turnaje.Database.Entity
+@model Uzivatel
+@{
+    ViewData["Title"] = "Editace Uživatele";
+}
+<style>
+    .tab-content {
+        margin: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+</style>
+
+<h2>Editace Uživatele</h2>
+<div class="container mt-4">
+    <ul class="nav nav-tabs cyberpunk-tabs">
+        <li class="nav-item">
+            <a class="nav-link active text-cyberpunk" data-toggle="tab" href="#EditProfile"> <i class="bi bi-people-fill"></i> Edit Your Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-cyberpunk" data-toggle="tab" href="#AddGame"><i class="bi bi-eye-fill"></i> Add Game ID</a>
+        </li>
+    </ul>
+    <div id="EditProfile" class="tab-content">
+        <form asp-action="UserSettings">
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" type="text" id="Id" name="Id" class="form-control" disabled readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nickname" class="control-label"></label>
+                <input asp-for="Nickname" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Crypto" class="control-label"></label>
+                <input asp-for="Crypto" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Uložit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div id="AddGame" class="tab-content" style="display:none;">
+        <h4>My Games</h4>
+        <table>
+            <tr>
+                <th>Game ID</th>
+                <th>Name</th>
+                <th>Ingame Name</th>
+                <th>Actions</th>
+            </tr>
+            @for (int i = 0; i < Model.MyGames.Count; i++)
+            {
+                <tr>
+                    <td>@Model.MyGames[i].Id</td>
+                    <td>@Model.MyGames[i].Name</td>
+                    <td>@Model.MyGames[i].GameId</td>
+
+                    <td><button class="btn btn-cyberpunk" onclick="editItem(@Model.MyGames[i].Id)">Save</button></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

@@ -1,0 +1,37 @@
+﻿@using Turnaje.Database.Entity
+@model Uzivatel 
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center text-cyberpunk">Register</h2>
+    <form asp-action="Register" method="post" class="cyberpunk-form">
+        <div class="form-group">
+            <label asp-for="Nickname" class="text-cyberpunk">Nickname</label>
+            <input asp-for="Nickname" class="form-control" />
+            <span asp-validation-for="Nickname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password" class="text-cyberpunk">Password</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="text-cyberpunk">Email</label>
+            <input asp-for="Email" type="email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Crypto" class="text-cyberpunk">Crypto</label>
+            <input asp-for="Crypto" class="form-control" />
+            <span asp-validation-for="Crypto" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-cyberpunk">Register</button>
+    </form>
+</div>
