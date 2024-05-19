@@ -4,7 +4,7 @@
 *@
 @{
 }
-@model Turnaj // Replace with your actual model class
+@model Turnaj
 
 
 
@@ -53,7 +53,22 @@
         }
     </div>
     <div id="registration" class="tab-content" style="display:none;">
-        <a asp-action="TournamentRegistration" asp-route-id="@Model.Id">Register</a>
+        @{
+            var userId = User.Claims.FirstOrDefault(x => x.Type == "ID")?.Value;
+        }
+        <form asp-action="TournamentRegistration" method="post" class="cyberpunk-form">
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" type="number" id="Id" name="Id" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegUser" class="control-label"></label>
+                <input asp-for="RegUser" type="number" id="RegUser" name="RegUser" value="@userId" class="form-control" readonly>
+            </div>
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="RegUser" value="@userId" />
+            <button type="submit" class="btn btn-cyberpunk">Register</button>
+        </form>
     </div>
     <div id="rules" class="tab-content" style="display:none;">
         @Model.Pravidla

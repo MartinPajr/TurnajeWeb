@@ -19,5 +19,6 @@
         public List <Zapas> Zapasy { get; set; } // Zápasy
         public int Majitel { get; set; } // Administrátor turnaje
         public string Pravidla { get; set; } // Pravidla turnaje
+        public int RegUser { get; set; } 
     }
 }

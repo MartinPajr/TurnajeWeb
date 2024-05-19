@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper;
+using System.Data;
 using Turnaje.Database.Entity;
+
 
 namespace Turnaje.Database.Repository
 {
     public class HraciRepository : IUHraciRepository
     {
-        public Task<int> AddAsync(Hraci model)
+        private readonly IDbConnection _connection;
+        public HraciRepository(IDbConnection connection)
         {
-            throw new NotImplementedException();
+            _connection = connection;
+        }
+        public async Task<int> AddAsync(Hraci model)
+        {
+            var sql = "INSERT INTO Hraci (Turnaj, Uzivatel) VALUES (@TurnajId, @UzivatelId)";
+            return await _connection.ExecuteScalarAsync<int>(sql, model);
         }
 
         public Task<bool> DeleteAsync(int id)
@@ -24,9 +28,10 @@ namespace Turnaje.Database.Repository
             throw new NotImplementedException();
         }
 
-        public Task<Hraci> GetByIdAsync(int id)
+        public async Task<Hraci> GetByIdAsync(int turnajId, int uzivatelId)
         {
-            throw new NotImplementedException();
+            var query = "SELECT Turnaj, Uzivatel FROM Hraci WHERE Turnaj = @TurnajId AND Uzivatel = @UzivatelId";
+            return await _connection.QueryFirstOrDefaultAsync<Hraci>(query, new { UzivatelId = uzivatelId, TurnajId = turnajId });
         }
 
         public Task<bool> UpdateAsync(Hraci model)

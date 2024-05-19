@@ -17,6 +17,18 @@ namespace Turnaje.Database.Repository
         {
             return await _connection.QueryAsync<Turnaj>("SELECT * FROM Turnaj");
         }
+        public async Task<IEnumerable<Turnaj>> GetUpcomingTournamentsAsync()
+        {
+            var sql = "SELECT TOP 5 * FROM Turnaj WHERE Start >= GETDATE() ORDER BY Start ASC";
+            var result = await _connection.QueryAsync<Turnaj>(sql);
+            return result;
+        }
+        public async Task<IEnumerable<Turnaj>> GetUpcomingTournamentsByOwnerAsync(int? id)
+        {
+            var sql = "SELECT * FROM Turnaj WHERE Majitel = @Id ORDER BY Start ASC";
+            var result = await _connection.QueryAsync<Turnaj>(sql, new { Id = id });
+            return result;
+        }
 
         public async Task<Turnaj> GetByIdAsync(int id)
         {

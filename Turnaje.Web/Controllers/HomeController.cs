@@ -14,9 +14,10 @@ namespace Turnaje.Web.Controllers
         private readonly IUTurnajRepository _turnajRepository;
         private readonly IUZapasRepository _uZapasRepository;
         private readonly IUHraRepository _hraRepository;
+        private readonly IUHraciRepository _hraciRepository;
 
         private List<Turnaj> _turnajList;
-        public HomeController(ILogger<HomeController> logger, IUzivatelRepository uzivatelRepository, IUTurnajRepository turnajRepository, IUZapasRepository zapasRepository, IUHraRepository hraRepository)
+        public HomeController(ILogger<HomeController> logger, IUzivatelRepository uzivatelRepository, IUTurnajRepository turnajRepository, IUZapasRepository zapasRepository, IUHraRepository hraRepository, IUHraciRepository hraciRepository)
         {
             _logger = logger;
             _uzivatelRepository = uzivatelRepository;
@@ -24,20 +25,22 @@ namespace Turnaje.Web.Controllers
             _turnajList = new List<Turnaj>();
             _uZapasRepository = zapasRepository;
             _hraRepository = hraRepository;
+            _hraciRepository = hraciRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            //await _uZapasRepository.DeleteAsync(1);
-
-            Turnaj turnaj = await _turnajRepository.GetByIdAsync(1);
-            Turnaj turnaj2 = await _turnajRepository.GetByIdAsync(6);
-
-            _turnajList.Add(turnaj);
-            _turnajList.Add(turnaj2);
-
-
-
+            _turnajList = (List<Turnaj>)await _turnajRepository.GetUpcomingTournamentsAsync();
+            return View(_turnajList);
+        }
+        [HttpGet]
+        public async Task<IActionResult> MyTournaments(int? id)
+        {
+            if(id != null)
+            {
+                _turnajList = (List<Turnaj>)await _turnajRepository.GetUpcomingTournamentsByOwnerAsync(id);
+            }
+            
             return View(_turnajList);
         }
         public async Task<IActionResult> NewTournament()
@@ -146,14 +149,26 @@ namespace Turnaje.Web.Controllers
 
             return View(hraci);
         }
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TournamentRegistration(Hraci hraci)
+        public async Task<IActionResult> TournamentRegistration(Turnaj regis)
         {
-            
-
-            return View(hraci);
-        }*/
+            Hraci reg = new Hraci
+            {
+                TurnajId = regis.Id,
+                UzivatelId = regis.RegUser
+            };
+            if(regis.RegUser != 0)
+            {
+                if (await _hraciRepository.GetByIdAsync(regis.Id, regis.RegUser) == null)
+                {
+                    await _hraciRepository.AddAsync(reg);
+                    return RedirectToAction("Tournament", new { id = regis.Id });
+                }
+            }
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> StartTournament(int id)

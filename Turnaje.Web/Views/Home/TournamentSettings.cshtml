@@ -29,8 +29,6 @@
             <label asp-for="CheckStart" class="text-cyberpunk">Check-In Start</label>
             <input asp-for="CheckStart" type="datetime-local" class="form-control" />
         </div>
-         class="user-profile">
-                        <a asp-controller="Account" asp-action="UserProfile" asp-route-id=@User.Claims.FirstOrDefault(x => x.Type == "ID")?.Value style="text-decoration:none;"><h3>@User.Claims.FirstOrDefault(x => x.Type == "NAME")?.Value</h3></a>
 
         <button type="submit" class="btn btn-cyberpunk">Save Settings</button>
     </form>

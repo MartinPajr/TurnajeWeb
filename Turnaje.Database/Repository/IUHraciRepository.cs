@@ -10,7 +10,7 @@ namespace Turnaje.Database.Repository
     public interface IUHraciRepository
     {
         Task<IEnumerable<Hraci>> GetAllAsync();
-        Task<Hraci> GetByIdAsync(int id);
+        Task<Hraci> GetByIdAsync(int turnajId, int uzivatelId);
         Task<int> AddAsync(Hraci model);
         Task<bool> UpdateAsync(Hraci model);
         Task<bool> DeleteAsync(int id);
